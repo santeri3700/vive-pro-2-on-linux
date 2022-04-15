@@ -1,4 +1,4 @@
-# linux-vivepro2
+# HTC VIVE Pro 2 on Linux and SteamVR 
 
 This guide is meant for tinkerers who know their way around. \
 I do not recommend attempting to use the VIVE Pro 2 on anything other than bleeding edge systems (such as Arch Linux) \
@@ -33,6 +33,10 @@ I can't recommend using SteamVR on Linux at the moment so consider this as exper
 **NOTE:** The custom kernel is only designed to be installed on Arch Linux. \
 If you are on another distribution, will have to find out how to patch and compile a kernel on it. \
 See Kernel Patches section below for the patches used in this guide.
+
+### Clone this repository
+- `git clone https://github.com/santeri3700/vive-pro-2-on-linux.git`
+- `cd ./vive-pro-2-on-linux`
 
 ### Build and install patched kernel
 Kernel version: 5.17.2
@@ -72,7 +76,7 @@ VIVE Console is only required for the viveVR driver and is not used in runtime.
 #### Build the lens server
 - `cd VivePro2-Linux-Driver/bin/lens-driver`
 - `cargo +nightly-2022-03-14 build --release --target x86_64-pc-windows-gnu --all-features --verbose`
-#### Build the lighhouse proxy driver
+#### Build the lighthouse proxy driver
 - `cd ../../`
 - `cargo +nightly-2022-03-14 build --release --all-features --verbose`
 #### Copy the compiled objects to the dist directory
