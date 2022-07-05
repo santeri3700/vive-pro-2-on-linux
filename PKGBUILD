@@ -54,7 +54,7 @@ fi
 
 pkgbase=linux-vivepro2
 _major=5.18
-pkgver=${_major}.3
+pkgver=${_major}.9
 _branch=5.x
 customver=1
 pkgrel=${customver}
@@ -83,15 +83,15 @@ validpgpkeys=(
 )
 
 # Archlinux patches
-_commit="2b60c101db51946f35c5456c97e9f6273a22468e" # 5.18.3.arch1-1 
+_commit="1d8e9e2101a9783d4e0e68fec0f9e82b94d6f982" # 5.18.9.arch1-1
 _patches=()
 for _patch in ${_patches[@]}; do
     #source+=("${_patch}::https://git.archlinux.org/svntogit/packages.git/plain/trunk/${_patch}?h=packages/linux&id=${_commit}")
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('c70cb405076c3cfd73e4de729430b0342ea21b92a04d8284a03fac664ef1cfea'
-            '2b73f3f9a869a67f203409ff28bbaee2827373bcc06c7383ae65a07f9ff772e6'
+sha256sums=('3882e26fcedcfe3ccfc158b9be2d95df25f26c3795ecf1ad95708ed532f5c93c'
+            'ed86c9b0ab53f9db5a41b1143fd645a239e4911ab95d0e46c205c41e7ac1e0cb'
             '47937a381f62425121f66337a94fb94fde5d4983c97aba23b05ab46d513b0dad'
             '4609a34ab9794b59d159eaf2f6a6b7e1751756875a5ea6cfbafc50b7df76ca35'
             'f1aa6c47614ef0862b2c8adf1e7ce46665a1ef1ece12371f5cb4c8a14aeb1dc3')

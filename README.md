@@ -2,7 +2,7 @@
 
 This guide is meant for tinkerers who know their way around. \
 I do not recommend attempting to use the VIVE Pro 2 on anything other than bleeding edge systems (such as Arch Linux) \
-The VR experience on Linux as of 2022-06-12 is mediocre at best especially on the newer hardware such as the VIVE Pro 2. \
+The VR experience on Linux as of 2022-07-06 is mediocre at best especially on the newer hardware such as the VIVE Pro 2. \
 I can't recommend using SteamVR on Linux at the moment so consider this as experimentation rather than entertainment for now.
 
 **Thanks for [CertainLach](https://github.com/CertainLach/VivePro2-Linux-Driver) for creating the driver for the VIVE Pro 2 on Linux!**
@@ -10,7 +10,7 @@ I can't recommend using SteamVR on Linux at the moment so consider this as exper
 ---
 
 ## WORK IN PROGRESS
-**Updated**: 2022-06-12
+**Updated**: 2022-07-06
 
 See configuration info and driver status/progress here: https://github.com/CertainLach/VivePro2-Linux-Driver#progress
 
@@ -27,7 +27,7 @@ See Kernel Patches section below for the patches used in this guide.
 - `cd ./vive-pro-2-on-linux`
 
 ### Build and install patched kernel
-Kernel version: 5.18.3
+Kernel version: 5.18.9
 
 #### Copy your current kernel config
 **NOTE**: If you are currently running Linux version other than 5.18.x, you might have to update the config.
@@ -75,6 +75,7 @@ Install SteamVR from Steam and **close Steam after it has been installed**. \
 - `sudo pacman -S git rsync rustup`
 - `sudo pacman -S mingw-w64-binutils mingw-w64-crt mingw-w64-gcc mingw-w64-headers mingw-w64-winpthreads`
 - `sudo pacman -S wine` or `sudo pacman -S wine-staging`
+
   System Wine is used for the lens-server.
 
 #### Install/Update nightly version of Rust for Windows x86_64 target
@@ -138,12 +139,13 @@ You can check the output of `lsusb` and `sudo dmesg` to verify connectivity.
 ### Make sure Wine is properly installed system wide
 - `wine64 --version`
 - `wine64 winecfg`
+
   Try clearing the default wine prefix if you face issues with the lens-server (`mv ~/.wine ~/.wine_bak`)
 
 ### Add CAP_SYS_NICE capability for SteamVR compositor
 This is done beforehand to avoid issues where Steam would require superuser access when launching SteamVR. \
 It should also improve performance and latency. \
-**WARNING! This enables SteamVR's "Asynchronous Reprojection" which is partially broken as of SteamVR version 1.23.1 (2022-06-03). See Workaround below**
+**WARNING! This enables SteamVR's "Asynchronous Reprojection" which is partially broken as of SteamVR version 1.23.4 (2022-07-02). See Workaround below**
 - `cd ~/.steam/steam/steamapps/common/SteamVR/`
 - `sudo setcap CAP_SYS_NICE=eip ./bin/linux64/vrcompositor-launcher`
 
@@ -155,11 +157,39 @@ It should also improve performance and latency. \
 ---
 
 ## Known issues & Workarounds
+- SteamVR crashes with AMDGPU (and Wayland)
+  - Wayland related info and workaround(s): https://gitlab.freedesktop.org/drm/amd/-/issues/1980#note_1430834
+
+
+- SteamVR crashes and system freezes (AMDGPU) \
+  This is a Mesa related issue: https://gitlab.freedesktop.org/drm/amd/-/issues/1980
+
+  ### Crash workaround
+  * 1 - Boot system without the VIVE Link Box powered on or connected via USB
+
+  * 2 - Launch Steam and power on / connect the VIVE Link Box via USB (and display cable)
+
+  * 3 - Wait for Steam to detect the VR headset (VR button appear to the top right corner on Steam)
+
+  * 4 - Launch SteamVR and wait for it to crash. The headset displays a very laggy image for about 10 seconds before going dark. \
+  The "dc_stream_state" errors appear in system logs at this point. System will continue to function as normal.
+
+  * 5 - Power off or disconnect the VIVE Link Box and close Steam (wait for the Steam background processes to terminate)
+
+  * 6 - Launch Steam again and power on / connect the VIVE Link Box after Steam has opened.
+
+  * 7 - Launch SteamVR which should now start without problems or "dc_stream_state" error messages in the system logs.
+
+  * 8 - After enjoying some VR, close SteamVR and repeat steps 5-7 to play again or restart the system and start from step 1. \
+  Attempting to re-launch SteamVR without doing steps 5-7 at this point will result in a system crash every time.
+
+
 - Headset displays nothing and SteamVR fails to enable Direct Display Mode
-  - This might be caused because of the missing kernel patches. The VIVE Pro 2 is not fully supported in the official releases of the Linux kernel as of 2022-06-12.
+  - This might be caused because of the missing kernel patches. The VIVE Pro 2 is not fully supported in the official releases of the Linux kernel as of 2022-07-06.
   - Wayland compatibility is a hit or miss (at least on SwayWM). Please open an issue if you have a workaround or tips regarding this.
   - Wayland related info and workaround(s): https://github.com/ValveSoftware/SteamVR-for-Linux/issues/499
   - Issue: https://github.com/ValveSoftware/SteamVR-for-Linux/issues/450
+
 
 - Visual artifacts (such as green pixel snow) caused by the "Asynchronous Reprojection".
   - Add `"enableLinuxVulkanAsync" : false,` under the `steamvr` section (above "installID") in the `steamvr.vrsettings` file:
@@ -174,14 +204,16 @@ It should also improve performance and latency. \
   - This can reduce performance and smoothness depending on your hardware. With an RX 5700 XT (Mesa 22.0 w/ RADV) the framerate is much more stable, but slightly lower.
   - Issue: https://github.com/ValveSoftware/SteamVR-for-Linux/issues/230
 
+
 - Head tracking feels sluggish/jittery/delayed/too smooth
   - This is related to the Linux kernel's hidraw driver and other factors.
   - The hidraw driver was improved in Linux 5.17 and newer. See: https://github.com/torvalds/linux/commit/8590222e4b021054a7167a4dd35b152a8ed7018e
   - Your kernel config's timer frequency might be set lower than 1000Hz which could affect the smoothness. See "Optimize kernel timer frequency" section.
   - The custom kernel provided with this repository includes the hidraw improvements and other necessary patches.
 
+
 - Virtual controllers and hands render behind menus and 3D models appear "inverted"
-  - No known workaround as of 2022-06-12, but this issue is not present in the SteamVR `linux_v1.14` Beta branch.
+  - No known workaround as of 2022-07-06, but this issue is not present in the SteamVR `linux_v1.14` Beta branch.
   - This might only affect AMD users (amdgpu + mesa)
   - Issue: https://github.com/ValveSoftware/SteamVR-for-Linux/issues/430
 
