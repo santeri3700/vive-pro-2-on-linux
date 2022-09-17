@@ -2,7 +2,7 @@
 
 This guide is meant for tinkerers who know their way around. \
 I do not recommend attempting to use the VIVE Pro 2 on anything other than bleeding edge systems (such as Arch Linux) \
-The VR experience on Linux as of 2022-07-06 is mediocre at best especially on the newer hardware such as the VIVE Pro 2. \
+The VR experience on Linux as of 2022-09-17 is mediocre at best especially on the newer hardware such as the VIVE Pro 2. \
 I can't recommend using SteamVR on Linux at the moment so consider this as experimentation rather than entertainment for now.
 
 **Thanks for [CertainLach](https://github.com/CertainLach/VivePro2-Linux-Driver) for creating the driver for the VIVE Pro 2 on Linux!**
@@ -10,7 +10,7 @@ I can't recommend using SteamVR on Linux at the moment so consider this as exper
 ---
 
 ## WORK IN PROGRESS
-**Updated**: 2022-07-06
+**Updated**: 2022-09-17
 
 See configuration info and driver status/progress here: https://github.com/CertainLach/VivePro2-Linux-Driver#progress
 
@@ -27,10 +27,10 @@ See Kernel Patches section below for the patches used in this guide.
 - `cd ./vive-pro-2-on-linux`
 
 ### Build and install patched kernel
-Kernel version: 5.18.9
+Kernel version: 5.19.9
 
 #### Copy your current kernel config
-**NOTE**: If you are currently running Linux version other than 5.18.x, you might have to update the config.
+**NOTE**: If you are currently running Linux version other than 5.19.x, you might have to update the config.
 - `mkdir -p ~/.config/linux-vivepro2/`
 - `zcat /proc/config.gz > ~/.config/linux-vivepro2/myconfig`
 
@@ -74,12 +74,13 @@ Install SteamVR from Steam and **close Steam after it has been installed**. \
 #### Install dependencies
 - `sudo pacman -S git rsync rustup`
 - `sudo pacman -S mingw-w64-binutils mingw-w64-crt mingw-w64-gcc mingw-w64-headers mingw-w64-winpthreads`
+- `rustup toolchain install nightly-2022-09-16`
 - `sudo pacman -S wine` or `sudo pacman -S wine-staging`
 
   System Wine is used for the lens-server.
 
 #### Install/Update nightly version of Rust for Windows x86_64 target
-- `rustup +nightly-2022-04-08 target add x86_64-pc-windows-gnu`
+- `rustup +nightly-2022-09-16 target add x86_64-pc-windows-gnu`
 
 #### Clone the driver repository
 - `git clone https://github.com/CertainLach/VivePro2-Linux-Driver.git`
@@ -89,15 +90,15 @@ Install SteamVR from Steam and **close Steam after it has been installed**. \
 #### Clone and build the sewer tool repository
 - `git clone https://github.com/CertainLach/sewer.git`
 - `cd sewer`
-- `cargo +nightly-2022-04-08 build --release --all-features --verbose`
+- `cargo +nightly-2022-09-16 build --release --all-features --verbose`
 
 #### Build driver-proxy
 - `cd $VIVEPRO2DRVDIR/bin/driver-proxy`
-- `cargo +nightly-2022-04-08 build --release --all-features --verbose`
+- `cargo +nightly-2022-09-16 build --release --all-features --verbose`
   
 #### Build lens-server
 - `cd $VIVEPRO2DRVDIR/bin/lens-server`
-- `cargo +nightly-2022-04-08 build --release --target x86_64-pc-windows-gnu --all-features --verbose`
+- `cargo +nightly-2022-09-16 build --release --target x86_64-pc-windows-gnu --all-features --verbose`
 
 #### Copy the compiled objects to the dist-proxy directory
 - `cd $VIVEPRO2DRVDIR/dist-proxy/`
@@ -158,11 +159,11 @@ It should also improve performance and latency. \
 
 ## Known issues & Workarounds
 - SteamVR crashes with AMDGPU (and Wayland)
-  - Wayland related info and workaround(s): https://gitlab.freedesktop.org/drm/amd/-/issues/1980#note_1430834
+  - Wayland related info and workaround(s): https://gitlab.freedesktop.org/mesa/mesa/-/issues/7041#note_1504005
 
 
 - SteamVR crashes and system freezes (AMDGPU) \
-  This is a Mesa related issue: https://gitlab.freedesktop.org/drm/amd/-/issues/1980
+  This is a Mesa related issue: https://gitlab.freedesktop.org/mesa/mesa/-/issues/7041
 
   ### Crash workaround
   * 1 - Boot system without the VIVE Link Box powered on or connected via USB
@@ -185,7 +186,7 @@ It should also improve performance and latency. \
 
 
 - Headset displays nothing and SteamVR fails to enable Direct Display Mode
-  - This might be caused because of the missing kernel patches. The VIVE Pro 2 is not fully supported in the official releases of the Linux kernel as of 2022-07-06.
+  - This might be caused because of the missing kernel patches. The VIVE Pro 2 is not fully supported in the official releases of the Linux kernel as of 2022-09-17.
   - Wayland compatibility is a hit or miss (at least on SwayWM). Please open an issue if you have a workaround or tips regarding this.
   - Wayland related info and workaround(s): https://github.com/ValveSoftware/SteamVR-for-Linux/issues/499
   - Issue: https://github.com/ValveSoftware/SteamVR-for-Linux/issues/450
@@ -213,7 +214,7 @@ It should also improve performance and latency. \
 
 
 - Virtual controllers and hands render behind menus and 3D models appear "inverted"
-  - No known workaround as of 2022-07-06, but this issue is not present in the SteamVR `linux_v1.14` Beta branch.
+  - No known workaround as of 2022-09-17, but this issue is not present in the SteamVR `linux_v1.14` Beta branch.
   - This might only affect AMD users (amdgpu + mesa)
   - Issue: https://github.com/ValveSoftware/SteamVR-for-Linux/issues/430
 
