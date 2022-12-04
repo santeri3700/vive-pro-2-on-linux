@@ -53,9 +53,9 @@ fi
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-vivepro2
-_major=5.19
-pkgver=${_major}.9
-_branch=5.x
+_major=6.0
+pkgver=${_major}.11
+_branch=6.x
 customver=1
 pkgrel=${customver}
 pkgdesc='Linux Vive Pro 2 - Current Stable (STABLE)'
@@ -73,9 +73,9 @@ options=('!strip')
 _srcname="linux-${pkgver}-vivepro2-${customver}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${pkgver}.tar."{xz,sign}
-        "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/7779c9c76d05a81d4e294eaa007625800cb0a74c/kernel-patches/0001-drm-edid-non-desktop.patch" # [PATCH] drm/edid: Add Vive Pro 2 to non-desktop list: https://lkml.org/lkml/2022/1/18/693
-        "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/7779c9c76d05a81d4e294eaa007625800cb0a74c/kernel-patches/0003-drm-edid-dsc-bpp-parse.patch" # [PATCH v2 1/2] drm/edid: parse DRM VESA dsc bpp target: https://lkml.org/lkml/2022/2/20/151
-        "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/7779c9c76d05a81d4e294eaa007625800cb0a74c/kernel-patches/0004-drm-amd-dsc-bpp-apply.patch" # [PATCH v2 2/2] drm/amd: use fixed dsc bits-per-pixel from edid: https://lkml.org/lkml/2022/2/20/153
+        "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/b30397c5763fbd9a5eeee379f55150730c9b38d9/kernel-patches/0001-drm-edid-non-desktop.patch" # [PATCH] drm/edid: Add Vive Pro 2 to non-desktop list: https://lkml.org/lkml/2022/1/18/693
+        "0003-drm-edid-dsc-bpp-parse_fix.patch" # TEMPORARY FIX - [PATCH v2 1/2] drm/edid: parse DRM VESA dsc bpp target: https://lkml.org/lkml/2022/2/20/151
+        "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/88373708d501735a577bad4aa2ee9b22cf564644/kernel-patches/0004-drm-amd-dsc-bpp-apply.patch" # [PATCH v2 2/2] drm/amd: use fixed dsc bits-per-pixel from edid: https://lkml.org/lkml/2022/2/20/153
 )
 validpgpkeys=(
     'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linux Torvalds
@@ -83,18 +83,18 @@ validpgpkeys=(
 )
 
 # Archlinux patches
-_commit="456a5821a8e2d658f9669e64be39dcb5e61800e5" # 5.19.9.arch1-1
+_commit="1ebbcdaff55488378bcf1028a673915a8d9c0e9f" # 6.0.11.arch1-1
 _patches=()
 for _patch in ${_patches[@]}; do
     #source+=("${_patch}::https://git.archlinux.org/svntogit/packages.git/plain/trunk/${_patch}?h=packages/linux&id=${_commit}")
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('0ad5b5986693adc1962be807bc3a64423a24b6a9da9df39b259d7e3bfd927f37'
-            '9856f9f5937005169d7ecf0ca615e9b3dcdfd1a48160a861c0a874ddf60a9507'
-            '47937a381f62425121f66337a94fb94fde5d4983c97aba23b05ab46d513b0dad'
-            '4609a34ab9794b59d159eaf2f6a6b7e1751756875a5ea6cfbafc50b7df76ca35'
-            'f1aa6c47614ef0862b2c8adf1e7ce46665a1ef1ece12371f5cb4c8a14aeb1dc3')
+sha256sums=('2bae6131e64971e1e34ff395fa542971134c857bdb0b29069ab847c7c9a9c762'
+            '328b7e712a8d212cb649c1956a329fedbbb8ea669805376ad1ad5f681d6e8a63'
+            '5b64188583b42118734b182000aeacfb51a50fe9de5d6a30ec89ab33c9349de4'
+            'b030008cc1f17874f6881f42ed04082f1b1c29a7b4a3ff76c8a2296d5deda389'
+            'bd7ea28487d86b175152d2e14a02ec10adf9baf013bdb332f3ab397f37bdd836')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}

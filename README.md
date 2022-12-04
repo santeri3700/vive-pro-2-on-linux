@@ -2,7 +2,7 @@
 
 This guide is meant for tinkerers who know their way around. \
 I do not recommend attempting to use the VIVE Pro 2 on anything other than bleeding edge systems (such as Arch Linux) \
-The VR experience on Linux as of 2022-09-17 is mediocre at best especially on the newer hardware such as the VIVE Pro 2. \
+The VR experience on Linux as of 2022-12-04 is mediocre at best especially on the newer hardware such as the VIVE Pro 2. \
 I can't recommend using SteamVR on Linux at the moment so consider this as experimentation rather than entertainment for now.
 
 **Thanks for [CertainLach](https://github.com/CertainLach/VivePro2-Linux-Driver) for creating the driver for the VIVE Pro 2 on Linux!**
@@ -10,15 +10,18 @@ I can't recommend using SteamVR on Linux at the moment so consider this as exper
 ---
 
 ## WORK IN PROGRESS
-**Updated**: 2022-09-17
+**Updated**: 2022-12-04
 
 See configuration info and driver status/progress here: https://github.com/CertainLach/VivePro2-Linux-Driver#progress
+
+**NOTE:** CertainLach now provides a PKGBUILD and build scripts for compiling a patched kernel for Arch Linux or Debian by utilizing Docker. \
+See: https://github.com/CertainLach/VivePro2-Linux-Driver/tree/master/kernel-patches
 
 ---
 
 ## Setup
 **NOTE:** The custom kernel is only designed to be installed on Arch Linux. \
-If you are on another distribution, will have to find out how to patch and compile a kernel on it. \
+If you are on another distribution, will have to find out how to patch and compile a kernel on it (see CertainLach's repository). \
 I personally do not recommend using anything else than a bleeding edge distro for this at the moment. \
 See Kernel Patches section below for the patches used in this guide.
 
@@ -27,10 +30,10 @@ See Kernel Patches section below for the patches used in this guide.
 - `cd ./vive-pro-2-on-linux`
 
 ### Build and install patched kernel
-Kernel version: 5.19.9
+Kernel version: 6.0.11
 
 #### Copy your current kernel config
-**NOTE**: If you are currently running Linux version other than 5.19.x, you might have to update the config.
+**NOTE**: If you are currently running Linux version other than 6.0.x, you might have to update the config.
 - `mkdir -p ~/.config/linux-vivepro2/`
 - `zcat /proc/config.gz > ~/.config/linux-vivepro2/myconfig`
 
@@ -146,7 +149,7 @@ You can check the output of `lsusb` and `sudo dmesg` to verify connectivity.
 ### Add CAP_SYS_NICE capability for SteamVR compositor
 This is done beforehand to avoid issues where Steam would require superuser access when launching SteamVR. \
 It should also improve performance and latency. \
-**WARNING! This enables SteamVR's "Asynchronous Reprojection" which is partially broken as of SteamVR version 1.23.4 (2022-07-02). See Workaround below**
+**WARNING! This enables SteamVR's "Asynchronous Reprojection" which is partially broken as of SteamVR version 1.25.1 (2022-11-07). See Workaround below**
 - `cd ~/.steam/steam/steamapps/common/SteamVR/`
 - `sudo setcap CAP_SYS_NICE=eip ./bin/linux64/vrcompositor-launcher`
 
@@ -186,7 +189,7 @@ It should also improve performance and latency. \
 
 
 - Headset displays nothing and SteamVR fails to enable Direct Display Mode
-  - This might be caused because of the missing kernel patches. The VIVE Pro 2 is not fully supported in the official releases of the Linux kernel as of 2022-09-17.
+  - This might be caused because of the missing kernel patches. The VIVE Pro 2 is not fully supported in the official releases of the Linux kernel as of 2022-12-04.
   - Wayland compatibility is a hit or miss (at least on SwayWM). Please open an issue if you have a workaround or tips regarding this.
   - Wayland related info and workaround(s): https://github.com/ValveSoftware/SteamVR-for-Linux/issues/499
   - Issue: https://github.com/ValveSoftware/SteamVR-for-Linux/issues/450
@@ -214,8 +217,8 @@ It should also improve performance and latency. \
 
 
 - Virtual controllers and hands render behind menus and 3D models appear "inverted"
-  - No known workaround as of 2022-09-17, but this issue is not present in the SteamVR `linux_v1.14` Beta branch.
-  - This might only affect AMD users (amdgpu + mesa)
+  - No known workaround as of 2022-12-04, but this issue is not present in the SteamVR `linux_v1.14` Beta branch.
+  - This only affects AMD users (amdgpu + mesa)
   - Issue: https://github.com/ValveSoftware/SteamVR-for-Linux/issues/430
 
 ---
