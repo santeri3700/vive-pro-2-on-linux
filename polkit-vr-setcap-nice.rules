@@ -1,0 +1,27 @@
+polkit.addRule(function (action, subject) {
+    const setcapBinary = "/usr/bin/setcap";
+    const allowedCapability = "CAP_SYS_NICE=eip";
+    const steamVrCompositorLauncherBinary = "/home/" + subject.user + "/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/vrcompositor-launcher";
+    const steamVrCompositorLauncherBinaryAlt = "/home/" + subject.user + "/.steam/steam/steamapps/common/SteamVR/bin/linux64/vrcompositor-launcher";
+    const monadoServiceBinary = "/usr/bin/monado-service";
+
+    if (action.id == "org.freedesktop.policykit.exec" &&
+        action.lookup("program") == setcapBinary) {
+        // Check if action has "command_line" key
+        if (action.lookup("command_line")) {
+            const argv = action.lookup('command_line').split(' ');
+        }
+        if (argv && argv.length == 3 &&
+            argv[1] == allowedCapability &&
+            (argv[2] == steamVrCompositorLauncherBinary ||
+            argv[2] == steamVrCompositorLauncherBinaryAlt)) {
+            polkit.log("Allowed setcap CAP_SYS_NICE=eip for SteamVR compositor launcher as requested by user '" + subject.user + "'");
+            return polkit.Result.YES;
+        } else if (argv && argv.length == 3 &&
+            argv[1] == allowedCapability &&
+            argv[2] == monadoServiceBinary) {
+            polkit.log("Allowed setcap CAP_SYS_NICE=eip for Monado Service as requested by user '" + subject.user + "'");
+            return polkit.Result.YES;
+        }
+    }
+});
