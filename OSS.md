@@ -121,7 +121,7 @@ Instructions based on: https://monado.freedesktop.org/valve-index-setup.html#5-s
    ```json
    {
        "config": [
-           "/home/user/.local/share/Steam/config"
+           "/home/USERNAME/.local/share/Steam/config"
        ],
        "external_drivers": null,
        "jsonid": "vrpathreg",

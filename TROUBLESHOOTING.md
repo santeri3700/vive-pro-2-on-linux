@@ -16,7 +16,7 @@
 
     SteamVR OpenXR launch options: `XR_RUNTIME_JSON=/home/USERNAME/.local/share/Steam/steamapps/common/SteamVR/steamxr_linux64.json %command%`
 
-    Monado OpenXR launch options: `XR_RUNTIME_JSON= %command%`
+    Monado OpenXR launch options: `XR_RUNTIME_JSON=/usr/share/openxr/1/openxr_monado.json %command%`
 
 - The menu button doesn't work (on some games)
   - I suspect this is an OpenXR issue. I haven't found a fix or a workaround. Please open an issue if you do. \
