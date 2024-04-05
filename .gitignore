@@ -1,0 +1,5 @@
+kernel/*.sig
+kernel/*.sign
+kernel/*.tar.xz
+kernel/*.patch
+kernel/*.zst
