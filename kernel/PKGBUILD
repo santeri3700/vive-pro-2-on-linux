@@ -82,11 +82,11 @@ prepare() {
   # scripts/config --disable CONFIG_HZ_250
   # scripts/config --disable CONFIG_HZ_100
   # Below are all set already by default arch linux kernel config
-  # scripts/config --enable CONFIG_HIGH_RES_TIMERS
-  # scripts/config --enable CONFIG_PREEMPT
-  # scripts/config --enable CONFIG_NO_HZ_FULL
-  # scripts/config --enable CONFIG_TIMERFD
-  # scripts/config --enable CONFIG_HPET_TIMER
+  scripts/config --enable CONFIG_HIGH_RES_TIMERS
+  scripts/config --enable CONFIG_PREEMPT
+  scripts/config --enable CONFIG_NO_HZ_FULL
+  scripts/config --enable CONFIG_TIMERFD
+  scripts/config --enable CONFIG_HPET_TIMER
 
   make -s kernelrelease > version
   echo "Prepared $pkgbase version $(<version)"
