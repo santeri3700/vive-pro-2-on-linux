@@ -75,17 +75,18 @@ prepare() {
   diff -u ../config .config || :
 
   echo "Optimizing kernel config for VR..."
-  scripts/config --set-val CONFIG_HZ 1000
-  scripts/config --enable CONFIG_HZ_1000
-  scripts/config --disable CONFIG_HZ_500
-  scripts/config --disable CONFIG_HZ_300
-  scripts/config --disable CONFIG_HZ_250
-  scripts/config --disable CONFIG_HZ_100
-  scripts/config --enable CONFIG_HIGH_RES_TIMERS
-  scripts/config --enable CONFIG_PREEMPT
-  scripts/config --enable CONFIG_NO_HZ_FULL
-  scripts/config --enable CONFIG_TIMERFD
-  scripts/config --enable CONFIG_HPET_TIMER
+  # scripts/config --set-val CONFIG_HZ 1000
+  # scripts/config --enable CONFIG_HZ_1000
+  # scripts/config --disable CONFIG_HZ_500
+  # scripts/config --disable CONFIG_HZ_300
+  # scripts/config --disable CONFIG_HZ_250
+  # scripts/config --disable CONFIG_HZ_100
+  # Below are all set already by default arch linux kernel config
+  # scripts/config --enable CONFIG_HIGH_RES_TIMERS
+  # scripts/config --enable CONFIG_PREEMPT
+  # scripts/config --enable CONFIG_NO_HZ_FULL
+  # scripts/config --enable CONFIG_TIMERFD
+  # scripts/config --enable CONFIG_HPET_TIMER
 
   make -s kernelrelease > version
   echo "Prepared $pkgbase version $(<version)"
