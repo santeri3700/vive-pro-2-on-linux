@@ -4,7 +4,7 @@
 # https://gitlab.archlinux.org/archlinux/packaging/packages/linux/
 
 pkgbase=linux-vivepro2
-pkgver=6.8.2.arch1
+pkgver=6.8.7.arch1
 pkgrel=1
 pkgdesc='Linux with Vive Pro 2 patches'
 url='https://github.com/santeri3700/vive-pro-2-on-linux'
@@ -39,11 +39,11 @@ validpgpkeys=(
   83BC8889351B5DEBBB68416EB8AC08600F108CDF  # Jan Alexander Steffens (heftig)
 )
 # https://www.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc
-sha256sums=('9ac322d85bcf98a04667d929f5c2666b15bd58c6c2d68dd512c72acbced07d04' # kernel tar.xz
-            '64008322e904d3bd3583430c9562ed991478df1623f06808859b5cef92631b5c' # kernel tar.sign
-            '9ccb26c046bacf04777617e96cad5b33d3d048b30bb4840a3b5ac2cdf40a3aba' # kernel patch.zst
-            '9bd8ad46581697885930d36639c993e38fabfc1478ae57ea359282ac6bfc29e5' # kernel patch.zst.sig
-            '671de18c8d3ce71bd192b250538a7b1d6952edfb03ddd48b9a1eca92881f000e' # kernel config
+sha256sums=('291d1a1faf4e87b3b0ea9729080db887aafd1ff2fac1430ceca921e46bc22fae' # kernel tar.xz
+            '98a59c81740f38fff64dc69fc516dd9ae13cbfddb84ef769eb5ddb7fe331f6c6' # kernel tar.sign
+            'a49b47f89187d2fce6c79f263683bc06b152974b4cf8d8faee535e4bcf04adc7' # kernel patch.zst
+            '524a8f2eeaf244967ae52205f400665b8e8017ac6b52a90533191d421e8016a1' # kernel patch.zst.sig
+            'fa72ae90d36d8fd2a8637c04a21eb38c50c20b9587a2c2a014038368dbd1a7c9' # kernel config
             '7de7954d1a9a8a639e70ca6f832340a3f328146a621b1079fbd691688424b715' # VIVE Pro 2 patch 0001
             'd9938bf44b4b5e7bcdc3c0f8418d6338b13f6340b9f64622490696453e555d29' # VIVE Pro 2 patch 0002
             '47bc785531525965cfa42d30ea5dec54b53643d4609a4913618d8db319df3ef0') # VIVE Pro 2 patch 0003
