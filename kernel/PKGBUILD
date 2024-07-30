@@ -34,9 +34,11 @@ source=(
   "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/cc807d587cb59589a21320c13cbbf2e8d0d0bd64/kernel-patches/0003-drm-amd-use-fixed-dsc-bits-per-pixel-from-edid.patch" # [PATCH v2 2/2] drm/amd: use fixed dsc bits-per-pixel from edid: https://lkml.org/lkml/2022/2/20/153
 )
 validpgpkeys=(
-  ABAF11C65A2970B130ABE3C479BE3E4300411886  # Linus Torvalds
-  647F28654894E3BD457199BE38DBBDC86092693E  # Greg Kroah-Hartman
-  83BC8889351B5DEBBB68416EB8AC08600F108CDF  # Jan Alexander Steffens (heftig)
+  'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
+  '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
+  '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
+  'E27E5D8A3403A2EF66873BBCDEA66FF797772CDC'  # Sasha Levin
+  'AC2B29BD34A6AFDDB3F68F35E7BFC8EC95861109'  # Ben Hutchings 
 )
 # https://www.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc
 sha256sums=('73d8520dd9cba5acfc5e7208e76b35d9740b8aae38210a9224e32ec4c0d29b70' # kernel tar.xz
@@ -45,7 +47,7 @@ sha256sums=('73d8520dd9cba5acfc5e7208e76b35d9740b8aae38210a9224e32ec4c0d29b70' #
             '40b19e5e82fd2209d145a95ba9cedc29f9aeed85b2368d187d0e36fd255827b8' # kernel patch.zst.sig
             'db35dc40884ec866a32225b2f7916fa7ae24273e08f9e204cddb010816255e17' # kernel config
             '7de7954d1a9a8a639e70ca6f832340a3f328146a621b1079fbd691688424b715' # VIVE Pro 2 patch 0001
-            'd9938bf44b4b5e7bcdc3c0f8418d6338b13f6340b9f64622490696453e555d29' # VIVE Pro 2 patch 0002
+            '1350f7d8336d83e5410858df015c1bd1afb75bd61524ee440f571f311f8e6c8d' # VIVE Pro 2 patch 0002
             '47bc785531525965cfa42d30ea5dec54b53643d4609a4913618d8db319df3ef0') # VIVE Pro 2 patch 0003
 
 export KBUILD_BUILD_HOST=archlinux
