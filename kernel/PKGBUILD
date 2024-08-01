@@ -4,7 +4,7 @@
 # https://gitlab.archlinux.org/archlinux/packaging/packages/linux/
 
 pkgbase=linux-vivepro2
-pkgver=6.7.arch1
+pkgver=6.10.2.arch1
 pkgrel=1
 pkgdesc='Linux with Vive Pro 2 patches'
 url='https://github.com/santeri3700/vive-pro-2-on-linux'
@@ -34,18 +34,20 @@ source=(
   "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/cc807d587cb59589a21320c13cbbf2e8d0d0bd64/kernel-patches/0003-drm-amd-use-fixed-dsc-bits-per-pixel-from-edid.patch" # [PATCH v2 2/2] drm/amd: use fixed dsc bits-per-pixel from edid: https://lkml.org/lkml/2022/2/20/153
 )
 validpgpkeys=(
-  ABAF11C65A2970B130ABE3C479BE3E4300411886  # Linus Torvalds
-  647F28654894E3BD457199BE38DBBDC86092693E  # Greg Kroah-Hartman
-  83BC8889351B5DEBBB68416EB8AC08600F108CDF  # Jan Alexander Steffens (heftig)
+  'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
+  '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
+  '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
+  'E27E5D8A3403A2EF66873BBCDEA66FF797772CDC'  # Sasha Levin
+  'AC2B29BD34A6AFDDB3F68F35E7BFC8EC95861109'  # Ben Hutchings 
 )
 # https://www.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc
-sha256sums=('ef31144a2576d080d8c31698e83ec9f66bf97c677fa2aaf0d5bbb9f3345b1069' # kernel tar.xz
-            'f81148e8461714fb0442efa369e10d2a69a2cc5b02f4347306cc373fb206df1d' # kernel tar.sign
-            'b6abc3ca814e36b3d4126459b3125e2eb5af7f02ea76801e34e6b465767e11aa' # kernel patch.zst
-            '15e4d248b927bf9296235c1d8346a7cfa1af59c5fa34c54c5daab60aa56679cf' # kernel patch.zst.sig
-            '45a44ff0e957cd562d2ceb60c1c90fc19c19e808209cebb46bfacfccfb56ad96' # kernel config
+sha256sums=('73d8520dd9cba5acfc5e7208e76b35d9740b8aae38210a9224e32ec4c0d29b70' # kernel tar.xz
+            'f72bf44f8a2a42f7211fcf8702d70f6cd1d20dff8ed455a759d19ede4f796e99' # kernel tar.sign
+            'a4efb43085bdfff93b11f26dd276859d347752958717b99c9f4a97133b857515' # kernel patch.zst
+            '40b19e5e82fd2209d145a95ba9cedc29f9aeed85b2368d187d0e36fd255827b8' # kernel patch.zst.sig
+            'db35dc40884ec866a32225b2f7916fa7ae24273e08f9e204cddb010816255e17' # kernel config
             '7de7954d1a9a8a639e70ca6f832340a3f328146a621b1079fbd691688424b715' # VIVE Pro 2 patch 0001
-            'd9938bf44b4b5e7bcdc3c0f8418d6338b13f6340b9f64622490696453e555d29' # VIVE Pro 2 patch 0002
+            '1350f7d8336d83e5410858df015c1bd1afb75bd61524ee440f571f311f8e6c8d' # VIVE Pro 2 patch 0002
             '47bc785531525965cfa42d30ea5dec54b53643d4609a4913618d8db319df3ef0') # VIVE Pro 2 patch 0003
 
 export KBUILD_BUILD_HOST=archlinux
@@ -81,6 +83,7 @@ prepare() {
   scripts/config --disable CONFIG_HZ_300
   scripts/config --disable CONFIG_HZ_250
   scripts/config --disable CONFIG_HZ_100
+  # Below are all set already by default arch linux kernel config
   scripts/config --enable CONFIG_HIGH_RES_TIMERS
   scripts/config --enable CONFIG_PREEMPT
   scripts/config --enable CONFIG_NO_HZ_FULL
