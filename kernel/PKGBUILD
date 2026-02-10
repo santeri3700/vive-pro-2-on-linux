@@ -4,7 +4,7 @@
 # https://gitlab.archlinux.org/archlinux/packaging/packages/linux/
 
 pkgbase=linux-vivepro2
-pkgver=6.10.2.arch1
+pkgver=6.18.5.arch1
 pkgrel=1
 pkgdesc='Linux with Vive Pro 2 patches'
 url='https://github.com/santeri3700/vive-pro-2-on-linux'
@@ -27,28 +27,27 @@ _srctag=v${pkgver%.*}-${pkgver##*.}
 source=(
   https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/${_srcname}.tar.{xz,sign}
   https://github.com/archlinux/linux/releases/download/$_srctag/linux-$_srctag.patch.zst{,.sig}
-  config  # the main kernel config file
-  "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/cc807d587cb59589a21320c13cbbf2e8d0d0bd64/kernel-patches/0001-drm-edid-Add-Vive-Cosmos-Vive-Pro-2-to-non-desktop-l.patch" # [PATCH] drm/edid: Add Vive Pro 2 to non-desktop list: https://lkml.org/lkml/2022/1/18/693
+  config # the main kernel config file
+  # "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/refs/heads/master/kernel-patches/0001-drm-edid-Add-Vive-Cosmos-Vive-Pro-2-to-non-desktop-l.patch" # [PATCH] drm/edid: Add Vive Pro 2 to non-desktop list: https://lkml.org/lkml/2022/1/18/693
   "0002-drm-edid-parse-DRM-VESA-dsc-bpp-target_fix.patch" # [PATCH v2 1/2] drm/edid: parse DRM VESA dsc bpp target: https://lkml.org/lkml/2022/2/20/151
   #"https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/cc807d587cb59589a21320c13cbbf2e8d0d0bd64/kernel-patches/0002-drm-edid-parse-DRM-VESA-dsc-bpp-target.patch" # [PATCH v2 1/2] drm/edid: parse DRM VESA dsc bpp target: https://lkml.org/lkml/2022/2/20/151
-  "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/cc807d587cb59589a21320c13cbbf2e8d0d0bd64/kernel-patches/0003-drm-amd-use-fixed-dsc-bits-per-pixel-from-edid.patch" # [PATCH v2 2/2] drm/amd: use fixed dsc bits-per-pixel from edid: https://lkml.org/lkml/2022/2/20/153
+  "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/refs/heads/master/kernel-patches/0003-drm-amd-use-fixed-dsc-bits-per-pixel-from-edid.patch" # [PATCH v2 2/2] drm/amd: use fixed dsc bits-per-pixel from edid: https://lkml.org/lkml/2022/2/20/153
 )
 validpgpkeys=(
-  'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
-  '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
-  '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
-  'E27E5D8A3403A2EF66873BBCDEA66FF797772CDC'  # Sasha Levin
-  'AC2B29BD34A6AFDDB3F68F35E7BFC8EC95861109'  # Ben Hutchings 
+  'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
+  '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
+  '83BC8889351B5DEBBB68416EB8AC08600F108CDF' # Jan Alexander Steffens (heftig)
+  'E27E5D8A3403A2EF66873BBCDEA66FF797772CDC' # Sasha Levin
+  'AC2B29BD34A6AFDDB3F68F35E7BFC8EC95861109' # Ben Hutchings
 )
 # https://www.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc
-sha256sums=('73d8520dd9cba5acfc5e7208e76b35d9740b8aae38210a9224e32ec4c0d29b70' # kernel tar.xz
-            'f72bf44f8a2a42f7211fcf8702d70f6cd1d20dff8ed455a759d19ede4f796e99' # kernel tar.sign
-            'a4efb43085bdfff93b11f26dd276859d347752958717b99c9f4a97133b857515' # kernel patch.zst
-            '40b19e5e82fd2209d145a95ba9cedc29f9aeed85b2368d187d0e36fd255827b8' # kernel patch.zst.sig
-            'db35dc40884ec866a32225b2f7916fa7ae24273e08f9e204cddb010816255e17' # kernel config
-            '7de7954d1a9a8a639e70ca6f832340a3f328146a621b1079fbd691688424b715' # VIVE Pro 2 patch 0001
-            '1350f7d8336d83e5410858df015c1bd1afb75bd61524ee440f571f311f8e6c8d' # VIVE Pro 2 patch 0002
-            '47bc785531525965cfa42d30ea5dec54b53643d4609a4913618d8db319df3ef0') # VIVE Pro 2 patch 0003
+sha256sums=('189d1f409cef8d0d234210e04595172df392f8cb297e14b447ed95720e2fd940' # kernel tar.xz
+  '05d18c772cc470e08af2b6e90b50f4bd33bd669ec4d059e9816031d57ee38f98'           # kernel tar.sign
+  'e1b9e56a90ce3eb5d60bf9cd76161b4cc6b2926cd61657c197f5f97c3adfcd89'           # kernel patch.zst
+  'd16db6b6622b3b46ea559b1e6b3b3d7c4c23bc64b23432c6fcc6b5be39f495b1'           # kernel patch.zst.sig
+  '53876f5a6cc1efc1cbfa671517db86177c02a4ddeafc8ae8fbbec5e1aeec66b6'           # kernel config
+  '1350f7d8336d83e5410858df015c1bd1afb75bd61524ee440f571f311f8e6c8d'           # VIVE Pro 2 patch 0002
+  '47bc785531525965cfa42d30ea5dec54b53643d4609a4913618d8db319df3ef0')          # VIVE Pro 2 patch 0003
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -58,8 +57,8 @@ prepare() {
   cd $_srcname
 
   echo "Setting version..."
-  echo "-$pkgrel" > localversion.10-pkgrel
-  echo "${pkgbase#linux}" > localversion.20-pkgname
+  echo "-$pkgrel" >localversion.10-pkgrel
+  echo "${pkgbase#linux}" >localversion.20-pkgname
 
   local src
   for src in "${source[@]}"; do
@@ -68,7 +67,7 @@ prepare() {
     src="${src%.zst}"
     [[ $src = *.patch ]] || continue
     echo "Applying patch $src..."
-    patch -Nlp1 < "../$src"
+    patch -Nlp1 <"../$src"
   done
 
   echo "Setting config..."
@@ -90,7 +89,7 @@ prepare() {
   scripts/config --enable CONFIG_TIMERFD
   scripts/config --enable CONFIG_HPET_TIMER
 
-  make -s kernelrelease > version
+  make -s kernelrelease >version
   echo "Prepared $pkgbase version $(<version)"
 }
 
@@ -133,7 +132,7 @@ _package() {
 
   echo "Installing modules..."
   ZSTD_CLEVEL=19 make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 \
-    DEPMOD=/doesnt/exist modules_install  # Suppress depmod
+    DEPMOD=/doesnt/exist modules_install # Suppress depmod
 
   # remove build link
   rm "$modulesdir"/build
@@ -202,14 +201,14 @@ _package-headers() {
   local file
   while read -rd '' file; do
     case "$(file -Sib "$file")" in
-      application/x-sharedlib\;*)      # Libraries (.so)
-        strip -v $STRIP_SHARED "$file" ;;
-      application/x-archive\;*)        # Libraries (.a)
-        strip -v $STRIP_STATIC "$file" ;;
-      application/x-executable\;*)     # Binaries
-        strip -v $STRIP_BINARIES "$file" ;;
-      application/x-pie-executable\;*) # Relocatable binaries
-        strip -v $STRIP_SHARED "$file" ;;
+    application/x-sharedlib\;*) # Libraries (.so)
+      strip -v $STRIP_SHARED "$file" ;;
+    application/x-archive\;*) # Libraries (.a)
+      strip -v $STRIP_STATIC "$file" ;;
+    application/x-executable\;*) # Binaries
+      strip -v $STRIP_BINARIES "$file" ;;
+    application/x-pie-executable\;*) # Relocatable binaries
+      strip -v $STRIP_SHARED "$file" ;;
     esac
   done < <(find "$builddir" -type f -perm -u+x ! -name vmlinux -print0)
 
