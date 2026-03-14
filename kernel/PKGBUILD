@@ -4,7 +4,7 @@
 # https://gitlab.archlinux.org/archlinux/packaging/packages/linux/
 
 pkgbase=linux-vivepro2
-pkgver=6.18.5.arch1
+pkgver=6.19.6.arch1
 pkgrel=1
 pkgdesc='Linux with Vive Pro 2 patches'
 url='https://github.com/santeri3700/vive-pro-2-on-linux'
@@ -28,10 +28,13 @@ source=(
   https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/${_srcname}.tar.{xz,sign}
   https://github.com/archlinux/linux/releases/download/$_srctag/linux-$_srctag.patch.zst{,.sig}
   config # the main kernel config file
-  # "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/refs/heads/master/kernel-patches/0001-drm-edid-Add-Vive-Cosmos-Vive-Pro-2-to-non-desktop-l.patch" # [PATCH] drm/edid: Add Vive Pro 2 to non-desktop list: https://lkml.org/lkml/2022/1/18/693
-  "0002-drm-edid-parse-DRM-VESA-dsc-bpp-target_fix.patch" # [PATCH v2 1/2] drm/edid: parse DRM VESA dsc bpp target: https://lkml.org/lkml/2022/2/20/151
-  #"https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/cc807d587cb59589a21320c13cbbf2e8d0d0bd64/kernel-patches/0002-drm-edid-parse-DRM-VESA-dsc-bpp-target.patch" # [PATCH v2 1/2] drm/edid: parse DRM VESA dsc bpp target: https://lkml.org/lkml/2022/2/20/151
-  "https://raw.githubusercontent.com/CertainLach/VivePro2-Linux-Driver/refs/heads/master/kernel-patches/0003-drm-amd-use-fixed-dsc-bits-per-pixel-from-edid.patch" # [PATCH v2 2/2] drm/amd: use fixed dsc bits-per-pixel from edid: https://lkml.org/lkml/2022/2/20/153
+  "0001-drm-edid-rename-VESA-block-parsing-functions-to-more-generic-name_v7.patch"  # [PATCH v7 1/7] drm/edid: rename VESA block parsing functions to more generic name: https://lore.kernel.org/all/20251202110218.9212-2-iam@lach.pw/
+  "0002-drm-edid-prepare-for-VESA-vendor-specific-data-block-extension_v7.patch"     # [PATCH v7 2/7] drm/edid: prepare for VESA vendor-specific data block extension: https://lore.kernel.org/all/20251202110218.9212-3-iam@lach.pw/
+  "0003-drm-edid-MSO-should-only-be-used-for-non-eDP-displays_v7.patch"              # [PATCH v7 3/7] drm/edid: MSO should only be used for non-eDP displays: https://lore.kernel.org/all/20251202110218.9212-4-iam@lach.pw/
+  "0004-drm-edid-parse-DSC-DPP-passthru-support-flag-for-mode-VII-timings_v7.patch"  # [PATCH v7 4/7] drm/edid: parse DSC DPP passthru support flag for mode VII timings: https://lore.kernel.org/all/20251202110218.9212-5-iam@lach.pw/
+  "0005-drm-edid-for-consistency-use-mask-everywhere-for-block-rev-parsing_v7.patch" # [PATCH v7 5/7] drm/edid: for consistency, use mask everywhere for block rev parsing: https://lore.kernel.org/all/20251202110218.9212-6-iam@lach.pw/
+  "0006-drm-edid-parse-DRM-VESA-dsc-bpp-target_v7.patch"                             # [PATCH v7 6/7] drm/edid: parse DRM VESA dsc bpp target: https://lore.kernel.org/all/20251202110218.9212-7-iam@lach.pw/
+  "0007-drm-amd-use-fixed-dsc-bits-per-pixel-from-edid_v7.patch"                     # [PATCH v7 7/7] drm/amd: use fixed dsc bits-per-pixel from edid: https://lore.kernel.org/all/20251202110218.9212-8-iam@lach.pw/
 )
 validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
@@ -41,13 +44,18 @@ validpgpkeys=(
   'AC2B29BD34A6AFDDB3F68F35E7BFC8EC95861109' # Ben Hutchings
 )
 # https://www.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc
-sha256sums=('189d1f409cef8d0d234210e04595172df392f8cb297e14b447ed95720e2fd940' # kernel tar.xz
-  '05d18c772cc470e08af2b6e90b50f4bd33bd669ec4d059e9816031d57ee38f98'           # kernel tar.sign
-  'e1b9e56a90ce3eb5d60bf9cd76161b4cc6b2926cd61657c197f5f97c3adfcd89'           # kernel patch.zst
-  'd16db6b6622b3b46ea559b1e6b3b3d7c4c23bc64b23432c6fcc6b5be39f495b1'           # kernel patch.zst.sig
-  '53876f5a6cc1efc1cbfa671517db86177c02a4ddeafc8ae8fbbec5e1aeec66b6'           # kernel config
-  '1350f7d8336d83e5410858df015c1bd1afb75bd61524ee440f571f311f8e6c8d'           # VIVE Pro 2 patch 0002
-  '47bc785531525965cfa42d30ea5dec54b53643d4609a4913618d8db319df3ef0')          # VIVE Pro 2 patch 0003
+sha256sums=('4d9f3ff73214f68c0194ef02db9ca4b7ba713253ac1045441d4e9f352bc22e14' # kernel tar.xz
+  '42f1049341f00d9c5e7e35f914da108ef7f144dc11fd1e6cf36982029e47f634'           # kernel tar.sign
+  '9465435c9e2a655f5bd73b5863c44e262d6e99e9929467f1d647bab2dd5afd26'           # kernel patch.zst
+  '0bacb462a6c4815bf7df7572cdc60a56c3b4e206e4437c12a2f94b98553b6b90'           # kernel patch.zst.sig
+  '112501e973db8bebf1d5ba9ac2ab58a97a3535b474fc93f2ae1e4a64488594ee'           # kernel config
+  'ba22efa9d7e8c8bc40eedeffa8b58b775b62aac63bb238923db65c4646a4fb68'           # 0001-drm-edid-rename-VESA-block-parsing-functions-to-more-generic-name_v7.patch
+  '0f72809b7f3d411c41a7eedc2b17038ba08a72e3f2c1f08cbf90899b98da44f2'           # 0002-drm-edid-prepare-for-VESA-vendor-specific-data-block-extension_v7.patch
+  '570c73aa34574b4c11237cc34dfd8f669d650ee96a33d598f04ae360ba7ac3db'           # 0003-drm-edid-MSO-should-only-be-used-for-non-eDP-displays_v7.patch
+  'ff1581894ca6372fe0869be4c2bb80329d79c9e1d4c31163ff9abaec0973e011'           # 0004-drm-edid-parse-DSC-DPP-passthru-support-flag-for-mode-VII-timings_v7.patch
+  '465b115529971acf49455b31430c30cadb6b8b9b69a02dc722b6179e7ec4dc7b'           # 0005-drm-edid-for-consistency-use-mask-everywhere-for-block-rev-parsing_v7.patch
+  '484a7cfb0fe05eb8171cee5af404d7893b1ee2651799d3f38c913daf82017e73'           # 0006-drm-edid-parse-DRM-VESA-dsc-bpp-target_v7.patch
+  '02fdcfc809fc56bdbd72db7cbc5a95febc9ede1df10fbdc009c2bf3e4f322ef4')          # 0007-drm-amd-use-fixed-dsc-bits-per-pixel-from-edid_v7.patch
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
