@@ -1,10 +1,8 @@
 # HTC VIVE Pro 2 on Linux 
 
-This guide is meant for tinkerers who know their way around.
+This guide is meant for tinkerers who know their way around. Instructions assume you're using Arch Linux or its derivative.
 
-I do not recommend attempting to use the VIVE Pro 2 on anything other than bleeding edge systems (such as Arch Linux which is the main focus of this repository).
-
-The VR experience on Linux as of 2024-01-10 is decent when you can get SteamVR 2.0+ working.
+The VR experience on Linux as of 2026-03-14 is decent when you can get SteamVR 2.14+ or Monado working.
 
 **Thanks to [CertainLach](https://github.com/CertainLach/VivePro2-Linux-Driver) for creating the kernel patches and a driver for the VIVE Pro 2 on Linux!**
 
@@ -17,13 +15,14 @@ Also see these helpful sources:
 ---
 
 ## WORK IN PROGRESS
-**Updated**: 2024-01-10
+**Updated**: 2026-03-14
 
 ## Setup
 
-### Build and install the patched kernel
-- `cd kernel`
-- Follow [KERNEL.md](KERNEL.md)
+### Build and install the patched kernel for higher resolution support
+**ATTENTION! The kernel patches are not strictly required with Linux 6.4+ unless you wish to use higher resolutions and refresh rate.**
+- Follow [KERNEL.md](KERNEL.md) to build and install the patched kernel for higher resolution support.
+- See LKML for more information about the patches: https://lore.kernel.org/all/20251202110218.9212-1-iam@lach.pw/
 
 ### Install PolKit rule to allow setting CAP_SYS_NICE capabilities for the SteamVR compositor and/or Monado service without sudo
 
