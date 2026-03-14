@@ -26,7 +26,6 @@ Ubuntu/Debian dependencies: `libeigen3-dev libusb-dev libusb-1.0-0-dev`
 cd $VIVEPRO2OSSDIR
 git clone https://github.com/cntools/libsurvive.git --recursive
 cd libsurvive
-cd $VIVEPRO2OSSDIR/libsurvive
 cmake -S . -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=Release -DUSE_HIDAPI=ON
 ninja -C build
 sudo ninja -C build install
@@ -47,7 +46,6 @@ cd $VIVEPRO2OSSDIR
 git clone --recursive https://gitlab.freedesktop.org/mateosss/basalt.git
 cd basalt
 cmake -S . -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DBASALT_BUILD_SHARED_LIBRARY_ONLY=ON -DCMAKE_BUILD_TYPE=Release
-sed -i '1s/^/#include <stdint.h>\n/' thirdparty/Pangolin/include/pangolin/platform.h
 ninja -C build
 sudo ninja -C build install
 ```
@@ -169,15 +167,15 @@ See more information about libsurvive calibration: https://monado.freedesktop.or
 2. Remove any existing libsurvive calibration configs: `mv ~/.config/libsurvive/config.json ~/.config/libsurvive/config.json.bak`
 3. Start Monado with the libsurvive auto-calibration enabled (`SURVIVE_GLOBALSCENESOLVER=1`): `XRT_COMPOSITOR_SCALE_PERCENTAGE=140 XRT_COMPOSITOR_COMPUTE=1 SURVIVE_GLOBALSCENESOLVER=1 SURVIVE_TIMECODE_OFFSET_MS=-6.94 monado-service`
 4. Wait for 1-2 minutes before touching the headset or controllers. This is for letting libsurvive to do some initial measurements on the ground.
-5. Start a VR game and play it for about 5 minutes. Pick a game which needs a lot of head and hand movement (such as Beat Saber). \
+5. Start a VR game or hello_xr (see more about it under "Testing Monado") and play it for about 2-5 minutes. The more head and controller movement the better. \
    During this time libsurvive will take lots of measurements which improves tracking accuracy. \
    **WARNING**: The game might feel a bit twitchy and jumpy during the calibration. \
    Tracking accuracy seems to get really good at around the 750 measurements mark.
    ```
    Info: MPFIT success 6331870.198420/27395.5559000724/0.0006107 (743 measurements, 1, MP_OK_CHI, 32 iters, up err 0.0000553, trace 0.0002583)
    ```
-6. Close the game and Monado (CTRL+C). Next time you start Monado, make sure the libsurvive auto-calibration is disabled (`SURVIVE_GLOBALSCENESOLVER=0`).
-7. Create a backup of the libsurvive calibration config: `mv ~/.config/libsurvive/config.json ~/.config/libsurvive/config.json.calibrated`
+6. Close the game and Monado (CTRL+C or kill the monado-service process). Next time you start Monado, make sure the libsurvive auto-calibration is disabled (`SURVIVE_GLOBALSCENESOLVER=0`).
+7. Create a backup of the libsurvive calibration config: `cp ~/.config/libsurvive/config.json ~/.config/libsurvive/config.json.calibrated`
 
 ### Method 2: Calibrating with survive-cli (headless)
 1. Power on and place the headset and controllers on the ground pointing towards the front base station. This will become your front facing direction.
@@ -191,7 +189,7 @@ See more information about libsurvive calibration: https://monado.freedesktop.or
    If you don't get near or over 750 measurements within 5 minutes, re-run steps 5, 3, 7 in mentioned order.
 8. Press CTRL+C twice to stop the calibration process.
 
-### Method 3: Calibrating with an existing SteamVR calibration
+### Method 2: Calibrating with an existing SteamVR calibration
 You need to set up SteamVR and do the calibration first. This can be done on Windows or on Linux with [CertainLach's proxy driver](STEAMVR.md). \
 Don't forget to disable OpenComposite before launching SteamVR on Linux!
 
@@ -210,6 +208,7 @@ The lighthousedb.json can be found from the following locations:
 # Running VR games
 
 ## Testing Monado
+- Start Monado: `XRT_COMPOSITOR_SCALE_PERCENTAGE=140 XRT_COMPOSITOR_COMPUTE=1 SURVIVE_GLOBALSCENESOLVER=0 SURVIVE_TIMECODE_OFFSET_MS=-6.94 monado-service`
 - Run hello_xr: `XR_RUNTIME_JSON=/usr/share/openxr/1/openxr_monado.json hello_xr -g Vulkan` \
   You should see a floating blue square in front of you and your controllers should be tracked 3D blocks.
 
