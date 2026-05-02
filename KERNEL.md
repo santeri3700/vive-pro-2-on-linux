@@ -24,7 +24,7 @@ See Kernel Patches section below for the patches used in this guide.
 - `sudo grub-mkconfig -o /boot/grub/grub.cfg`
 
 ### Reboot and ensure you've booted with the patched kernel
-- `uname -r` should print `6.x.x-arch1-1-vivepro2`
+- `uname -r` should print `7.x.x-arch1-1-vivepro2`
 - You can now proceed with setting up SteamVR and/or the FOSS VR alternatives.
 
 ## Kernel Patches

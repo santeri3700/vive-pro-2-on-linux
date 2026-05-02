@@ -2,7 +2,7 @@
 
 This guide is meant for tinkerers who know their way around. Instructions assume you're using Arch Linux or its derivative.
 
-The VR experience on Linux as of 2026-03-14 is decent when you can get SteamVR 2.14+ or Monado working.
+The VR experience on Linux as of 2026-05-02 is decent when you can get SteamVR 2.14+ or Monado working.
 
 **Thanks to [CertainLach](https://github.com/CertainLach/VivePro2-Linux-Driver) for creating the kernel patches and a driver for the VIVE Pro 2 on Linux!**
 
@@ -15,7 +15,7 @@ Also see these helpful sources:
 ---
 
 ## WORK IN PROGRESS
-**Updated**: 2026-03-14
+**Updated**: 2026-05-02
 
 ## Setup
 
