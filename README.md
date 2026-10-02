@@ -2,20 +2,24 @@
 
 This guide is meant for tinkerers who know their way around. Instructions assume you're using Arch Linux or its derivative.
 
-The VR experience on Linux as of 2026-05-02 is decent when you can get SteamVR 2.14+ or Monado working.
+The VR experience on Linux as of 2026-10-02 is decent when you can get SteamVR 2.17+ or Monado working.
 
 **Thanks to [CertainLach](https://github.com/CertainLach/VivePro2-Linux-Driver) for creating the kernel patches and a driver for the VIVE Pro 2 on Linux!**
 
 Also see these helpful sources:
-- Linux VR Adventures Wiki: https://lvra.gitlab.io/
-- VR on Linux: https://vronlinux.org/
+- Linux VR Adventures Wiki: https://vronlinux.org/
 - SteamVR for Linux Support: https://help.steampowered.com/en/faqs/view/18A4-1E10-8A94-3DDA
 - Reddit: https://www.reddit.com/r/virtualreality_linux/
 
 ---
 
 ## WORK IN PROGRESS
-**Updated**: 2026-05-02
+**Updated**: 2026-10-02
+
+## Updating from previous versions
+**It is highly recommended to uninstall and reinstall SteamVR to get rid of the old driver files!** \
+You should also review the "vivepro2" section of your steamvr.vrsettings file to ensure it is up-to-date. \
+It is usually located at `~/.local/share/Steam/config/steamvr.vrsettings`.
 
 ## Setup
 

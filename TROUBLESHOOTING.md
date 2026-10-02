@@ -10,7 +10,6 @@
     - See compatibility list here: https://help.steampowered.com/en/faqs/view/18A4-1E10-8A94-3DDA
 
 - A key component of SteamVR isn't working properly
-  - This could be an issue with the lens-server / Lens distortion helper.
   - Just try restarting whole Steam and try again. Sometimes it takes a couple of tries to get it working.
 
 - Headset only displays gargabe and glitchy colors

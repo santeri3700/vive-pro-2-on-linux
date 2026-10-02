@@ -15,20 +15,17 @@ NOTE: Install the native versions of Steam and SteamVR. Do NOT use Proton to run
   - [steam://install/250820](steam://install/250820)
   - https://store.steampowered.com/app/250820/
 
-Latest tested version of SteamVR is 2.14.5 (Build ID 21281713).
+Latest tested version of SteamVR are Stable 2.17.10 (Build ID 25330290) and Beta 2.18.2 (Build ID 25664061).
 
 ## Driver setup
 
 ### Install dependencies
-- `sudo pacman -S git rsync rustup`
+- `sudo pacman -S git rsync rustup rsync`
 - `sudo pacman -S mingw-w64-binutils mingw-w64-crt mingw-w64-gcc mingw-w64-headers mingw-w64-winpthreads`
-- `rustup toolchain install nightly-2025-10-24`
-- Optional: `sudo pacman -S wine` or `sudo pacman -S wine-staging`
-
-  System WINE is not required but will be used as a fallback for the lens-server.exe if Proton is not available.
+- `rustup toolchain install nightly-2026-10-02`
 
 ### Install/Update nightly version of Rust for Windows x86_64 target
-- `rustup +nightly-2025-10-24 target add x86_64-pc-windows-gnu`
+- `rustup +nightly-2026-10-02 target add x86_64-pc-windows-gnu`
 
 ### Clone the driver repository
 - `git clone https://github.com/CertainLach/VivePro2-Linux-Driver.git`
@@ -38,44 +35,57 @@ Latest tested version of SteamVR is 2.14.5 (Build ID 21281713).
 ### Clone and build the sewer tool repository
 - `git clone https://github.com/CertainLach/sewer.git`
 - `cd sewer`
-- `cargo +nightly-2025-10-24 build --release --all-features --verbose`
+- `cargo +nightly-2026-10-02 build --release --all-features --verbose`
 
-### Build driver-proxy
-- `cd $VIVEPRO2DRVDIR/bin/driver-proxy`
-- `cargo +nightly-2025-10-24 build --release --all-features --verbose`
-  
-### Build lens-server
-- `cd $VIVEPRO2DRVDIR/bin/lens-server`
-- `cargo +nightly-2025-10-24 build --release --target x86_64-pc-windows-gnu --all-features --verbose`
+### Build driver-vivevr
+- `cd $VIVEPRO2DRVDIR/bin/driver-vivevr`
+- `cargo +nightly-2026-10-02 build --release --all-features --verbose`
 
-### Copy the compiled objects to the dist-proxy directory
-- `cd $VIVEPRO2DRVDIR/dist-proxy/`
-- `mkdir bin`
-- `cp $VIVEPRO2DRVDIR/sewer/target/release/sewer ./bin`
-- `cp $VIVEPRO2DRVDIR/target/x86_64-pc-windows-gnu/release/lens-server.exe ./lens-server/`
-- `cp $VIVEPRO2DRVDIR/target/release/libdriver_proxy.so ./driver_lighthouse.so`
+### Copy the compiled objects to the dist directory
+- `cd $VIVEPRO2DRVDIR/dist/`
+- `mkdir tools`
+- `cp $VIVEPRO2DRVDIR/sewer/target/release/sewer ./tools/sewer`
+- `cp $VIVEPRO2DRVDIR/target/release/libdriver_vivevr.so ./bin/linux64/driver_viveVR.so`
 
-### Run the install script to install the components
+### Run the install script to install the components and patch SteamVR Room Setup
 - `./install.sh`
 
-### Check SteamVR files
+### Check SteamVR driver files and configuration
 ```
-$ cd $HOME/.local/share/Steam/steamapps/common/SteamVR
+$ bash ~/.local/share/Steam/steamapps/common/SteamVR/bin/vrpathreg.sh
+...
+External Drivers:
+        viveVR : /home/$USER/.local/share/vivepro2-linux-driver
 
-$ file drivers/lighthouse/bin/linux64/driver_lighthouse.so 
-drivers/lighthouse/bin/linux64/driver_lighthouse.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=..., with debug_info, not stripped
+$ cd ~/.local/share/vivepro2-linux-driver
 
-$ file drivers/lighthouse/bin/linux64/driver_lighthouse_real.so
-drivers/lighthouse/bin/linux64/driver_lighthouse_real.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=..., not stripped
+$ cat driver.vrdrivermanifest
+{
+        "alwaysActivate": false,
+        "name": "viveVR",
+        "directory": "",
+        "resourceOnly": false,
+        "redirectsDisplay": true,
+        "hmd_presence": ["0BB4.0342"]
+}
 
-$ file drivers/lighthouse/bin/linux64/lens-server/lens-server.exe 
-drivers/lighthouse/bin/linux64/lens-server/lens-server.exe: PE32+ executable (console) x86-64, for MS Windows
+$ file bin/linux64/driver_viveVR.so
+bin/linux64/driver_viveVR.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=..., not stripped
 
-$ file drivers/lighthouse/bin/linux64/lens-server/LibLensDistortion.dll
-drivers/lighthouse/bin/linux64/lens-server/LibLensDistortion.dll: PE32+ executable (DLL) (GUI) x86-64, for MS Windows
+$ file bin/linux64/lens-distort/LibLensDistortion.dll
+bin/linux64/lens-distort/LibLensDistortion.dll: PE32+ executable for MS Windows 6.00 (DLL), x86-64, 8 sections
 
-$ file drivers/lighthouse/bin/linux64/lens-server/opencv_world346.dll
-drivers/lighthouse/bin/linux64/lens-server/opencv_world346.dll: PE32+ executable (DLL) (console) x86-64, for MS Windows
+$ file bin/linux64/lens-distort/msvcp140.dll
+bin/linux64/lens-distort/msvcp140.dll: PE32+ executable for MS Windows 6.00 (DLL), x86-64, 7 sections
+
+$ file bin/linux64/lens-distort/opencv_world346.dll
+bin/linux64/lens-distort/opencv_world346.dll: PE32+ executable for MS Windows 6.00 (DLL), x86-64, 11 sections
+
+$ file bin/linux64/lens-distort/ucrtbase.dll
+bin/linux64/lens-distort/ucrtbase.dll: PE32+ executable for MS Windows 5.02 (DLL), x86-64, 6 sections
+
+$ file bin/linux64/lens-distort/vcruntime140.dll
+bin/linux64/lens-distort/vcruntime140.dll: PE32+ executable for MS Windows 6.00 (DLL), x86-64, 7 sections
 ```
 
 ## Settings
@@ -99,19 +109,13 @@ See [CertainLach's repository](https://github.com/CertainLach/VivePro2-Linux-Dri
 
 ## Running VR games
 
-### Make sure Proton and/or WINE is installed
-- Steam -> Library -> Tools -> Proton Experimental -> Install (NOTE: Proton must be installed onto the same drive as SteamVR!)
-
-**OR**
-
-- `wine64 --version`
-- `wine64 winecfg`
-
-TIP: Try clearing the default wine prefix if you face issues with system wine running the lens-server (`mv ~/.wine ~/.wine_bak`)
-
-## Launch Steam and start SteamVR
-- Complete the Room Setup like you would normally do.
-- Play VR games
+## Launch Steam
+- Start SteamVR \
+  **NOTE**: Add the launch options `QT_QPA_PLATFORM=xcb %command%` to SteamVR if the SteamVR main window fails to display correctly on Wayland sessions.
+- Complete the Room Setup like you would normally do. You only need to do this once. \
+  **NOTE**: The Room Setup is a buggy mess and might not work always. \
+  See https://vronlinux.org/docs/steamvr/ for more information and workarounds.
+- Play VR games (with Proton or another Wine/Proton fork unless you've managed to find a native Linux game)
 
 # Troubleshooting
 See [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
