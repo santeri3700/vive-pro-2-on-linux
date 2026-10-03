@@ -20,12 +20,8 @@ Latest tested version of SteamVR are Stable 2.17.10 (Build ID 25330290) and Beta
 ## Driver setup
 
 ### Install dependencies
-- `sudo pacman -S git rsync rustup rsync`
-- `sudo pacman -S mingw-w64-binutils mingw-w64-crt mingw-w64-gcc mingw-w64-headers mingw-w64-winpthreads`
-- `rustup toolchain install nightly-2026-10-02`
-
-### Install/Update nightly version of Rust for Windows x86_64 target
-- `rustup +nightly-2026-10-02 target add x86_64-pc-windows-gnu`
+- `sudo pacman -S git rsync rustup`
+- `rustup toolchain install stable` (Latest tested stable version is 1.99.0)
 
 ### Clone the driver repository
 - `git clone https://github.com/CertainLach/VivePro2-Linux-Driver.git`
@@ -35,11 +31,11 @@ Latest tested version of SteamVR are Stable 2.17.10 (Build ID 25330290) and Beta
 ### Clone and build the sewer tool repository
 - `git clone https://github.com/CertainLach/sewer.git`
 - `cd sewer`
-- `cargo +nightly-2026-10-02 build --release --all-features --verbose`
+- `cargo +stable build --release --all-features --verbose`
 
 ### Build driver-vivevr
 - `cd $VIVEPRO2DRVDIR/bin/driver-vivevr`
-- `cargo +nightly-2026-10-02 build --release --all-features --verbose`
+- `cargo +stable build --release --all-features --verbose`
 
 ### Copy the compiled objects to the dist directory
 - `cd $VIVEPRO2DRVDIR/dist/`
